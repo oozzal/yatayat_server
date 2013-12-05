@@ -7,6 +7,8 @@ gem 'protected_attributes'
 
 gem 'geocoder'
 
+gem 'puma'
+
 # Fix the conflict with the system 'rake':
 gem 'rake', '~> 0.9.6'
 

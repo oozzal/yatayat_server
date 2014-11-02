@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.4'
 gem 'rails-api'
+gem 'activerecord-reputation-system'
+gem 'protected_attributes'
 
 ### OpenShift Online changes:
 
@@ -19,8 +21,8 @@ gem 'rake', '~> 0.9.6'
 #
 group :development, :test do
   gem 'sqlite3'
-  gem 'minitest'
   gem 'thor'
+  gem 'pry'
 end
 
 # Add support for the MySQL

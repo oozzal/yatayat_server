@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.order(cached_votes_up: :desc)
 
     render json: @posts
   end
@@ -18,8 +18,10 @@ class PostsController < ApplicationController
   # POST /posts
   # POST /posts.json
   def create
-    # params[:post] = JSON.parse params[:post]
     @post = Post.new(post_params)
+
+    user = User.find_by_sim_serial_number(post_params[:sim_serial_number])
+    @post.user = user
 
     if @post.save
       render json: @post, status: :created, location: @post
@@ -49,10 +51,19 @@ class PostsController < ApplicationController
     head :no_content
   end
 
+  # POST /posts/like
+  def like
+    @post = Post.find(params[:id])
+    user = User.where(sim_serial_number: params[:sim_serial_number]).first
+    user && user.like(@post)
+
+    render json: @post
+  end
+
   private
 
-    def post_params
-      params.require(:post).permit(:title, :body, :user_id, :sub_category_id, :address)
-    end
+  def post_params
+    params.require(:post).permit(:title, :body, :user_id, :sub_category_id, :address, :sim_serial_number)
+  end
 end
 

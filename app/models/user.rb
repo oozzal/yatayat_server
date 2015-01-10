@@ -1,24 +1,21 @@
 class User < ActiveRecord::Base
-  attr_accessible :username, :phone_number, :sim_serial_number, :email, :first_name, :last_name, :address
+  attr_accessible :username, :phone_number, :sim_serial_number, :email, :first_name, :last_name, :address, :cached_votes_total, :cached_votes_up, :cached_votes_down, :cached_votes_score, :cached_weighted_total, :cached_weighted_score, :cached_weighted_average
 
   has_many :posts
 
   validates :sim_serial_number, presence: true, uniqueness: true
 
-  has_reputation :karma, source: :user
+  acts_as_votable
+  acts_as_voter
 
   def like(post)
-    post.add_evaluation(:likes, 1, self)
-    post.author.add_evaluation(:karma, 1, self)
-  rescue
-    false
+    self.likes post
+    self.likes post.user
   end
 
   def dislike(post)
-    post.add_evaluation(:dislikes, 1, self)
-    post.author.add_evaluation(:karma, -1, self)
-  rescue
-    false
+    self.dislikes post
+    self.dislikes post.user
   end
 
 end

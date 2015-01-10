@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
   resources :users, except: [:new, :edit]
-  resources :posts, except: [:new, :edit]
   resources :sub_categories, except: [:new, :edit]
   resources :categories, except: [:new, :edit]
+
+  resources :posts, except: [:new, :edit] do
+    collection { post 'like' }
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

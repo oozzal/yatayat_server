@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '4.1.4'
 gem 'rails-api'
-gem 'activerecord-reputation-system'
+gem 'acts_as_votable', '~> 0.10.0'
 gem 'protected_attributes'
 
 ### OpenShift Online changes:

@@ -2,7 +2,11 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.order(cached_votes_up: :desc)
+    @posts = Post.select('posts.id, posts.user_id, posts.title, posts.body, posts.cached_votes_up, posts.cached_votes_down, posts.created_at')
+              .order(cached_votes_up: :desc)
+              .to_json(include: {
+                user: { only: :username }
+              })
 
     render json: @posts
   end

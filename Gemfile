@@ -5,6 +5,8 @@ gem 'rails-api'
 gem 'acts_as_votable', '~> 0.10.0'
 gem 'protected_attributes'
 
+gem 'geocoder'
+
 ### OpenShift Online changes:
 
 # Fix the conflict with the system 'rake':

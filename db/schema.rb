@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141102080805) do
+ActiveRecord::Schema.define(version: 20150113125209) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -21,13 +21,21 @@ ActiveRecord::Schema.define(version: 20141102080805) do
 
   add_index "categories", ["name"], name: "index_categories_on_name", unique: true
 
-  create_table "posts", force: true do |t|
-    t.string   "title"
-    t.string   "body"
+  create_table "locations", force: true do |t|
+    t.decimal  "latitude",   precision: 10, scale: 6
+    t.decimal  "longitude",  precision: 10, scale: 6
+    t.string   "city"
+    t.string   "address"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "reports", force: true do |t|
+    t.string   "message"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "sub_category_id"
     t.integer  "cached_votes_total",      default: 0
     t.integer  "cached_votes_score",      default: 0
     t.integer  "cached_votes_up",         default: 0
@@ -35,26 +43,18 @@ ActiveRecord::Schema.define(version: 20141102080805) do
     t.integer  "cached_weighted_score",   default: 0
     t.integer  "cached_weighted_total",   default: 0
     t.float    "cached_weighted_average", default: 0.0
-  end
-
-  add_index "posts", ["cached_votes_down"], name: "index_posts_on_cached_votes_down"
-  add_index "posts", ["cached_votes_score"], name: "index_posts_on_cached_votes_score"
-  add_index "posts", ["cached_votes_total"], name: "index_posts_on_cached_votes_total"
-  add_index "posts", ["cached_votes_up"], name: "index_posts_on_cached_votes_up"
-  add_index "posts", ["cached_weighted_average"], name: "index_posts_on_cached_weighted_average"
-  add_index "posts", ["cached_weighted_score"], name: "index_posts_on_cached_weighted_score"
-  add_index "posts", ["cached_weighted_total"], name: "index_posts_on_cached_weighted_total"
-  add_index "posts", ["user_id"], name: "index_posts_on_user_id"
-
-  create_table "sub_categories", force: true do |t|
-    t.string   "name"
+    t.integer  "location_id"
     t.integer  "category_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
-  add_index "sub_categories", ["category_id"], name: "index_sub_categories_on_category_id"
-  add_index "sub_categories", ["name"], name: "index_sub_categories_on_name", unique: true
+  add_index "reports", ["cached_votes_down"], name: "index_reports_on_cached_votes_down"
+  add_index "reports", ["cached_votes_score"], name: "index_reports_on_cached_votes_score"
+  add_index "reports", ["cached_votes_total"], name: "index_reports_on_cached_votes_total"
+  add_index "reports", ["cached_votes_up"], name: "index_reports_on_cached_votes_up"
+  add_index "reports", ["cached_weighted_average"], name: "index_reports_on_cached_weighted_average"
+  add_index "reports", ["cached_weighted_score"], name: "index_reports_on_cached_weighted_score"
+  add_index "reports", ["cached_weighted_total"], name: "index_reports_on_cached_weighted_total"
+  add_index "reports", ["user_id"], name: "index_reports_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "username"

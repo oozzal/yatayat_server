@@ -8,3 +8,4 @@ class CreateCategories < ActiveRecord::Migration
     add_index :categories, :name, unique: true
   end
 end
+

@@ -16,8 +16,11 @@ class ReportsController < ApplicationController
   # GET /reports/1
   # GET /reports/1.json
   def show
-    @report = Report.find(params[:id])
+    @report = Report.select(:id, :user_id, :location_id, :category_id, :message, :cached_votes_up, :cached_votes_down, :created_at)
+              .find(params[:id])
               .to_json(include: {
+                user: { only: :username },
+                location: { only: :name },
                 category: { only: :name }
               })
 

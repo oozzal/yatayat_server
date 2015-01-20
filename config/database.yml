@@ -1,1 +1,12 @@
-../.openshift/config/database.yml
+default: &default
+  adapter: postgresql
+  database: yatayat
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+
+production:
+  <<: *default
+

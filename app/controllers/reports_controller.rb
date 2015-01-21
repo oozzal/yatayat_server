@@ -20,7 +20,7 @@ class ReportsController < ApplicationController
               .find(params[:id])
               .to_json(include: {
                 user: { only: :username },
-                location: { only: :name },
+                location: { only: [:name, :latitude, :longitude] },
                 category: { only: :name }
               })
 

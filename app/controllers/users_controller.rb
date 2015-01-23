@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find_by_sim_serial_number(params[:id])
-            .to_json(only: [:id, :sim_serial_number, :cached_votes_up, :cached_votes_down])
+            .to_json(only: [:id, :sim_serial_number, :username, :phone_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down])
 
     render json: @user
   end
@@ -19,7 +19,6 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    # params[:user] = JSON.parse params[:user]
     @user = User.new(user_params)
 
     if @user.save
@@ -29,13 +28,13 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # POST /users/1
+  # POST /users/1.json
   def update
-    @user = User.where(sim_serial_number: params[:id]).first
+    @user = User.find_by_sim_serial_number(params[:id])
 
     if @user.update(user_params)
-      head :no_content
+      render json: @user
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -44,7 +43,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user = User.where(sim_serial_number: params[:id]).first
+    @user = User.find_by_sim_serial_number(params[:id])
     @user.destroy
 
     head :no_content
@@ -52,8 +51,8 @@ class UsersController < ApplicationController
 
   private
 
-    def user_params
-      params.require(:user).permit(:username, :phone_number, :sim_serial_number, :email, :first_name, :last_name, :address)
-    end
+  def user_params
+    params.require(:user).permit(:username, :phone_number, :sim_serial_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down)
+  end
 end
 

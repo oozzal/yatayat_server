@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resources :users, except: [:new, :edit]
+
+  match '/users/:id' => 'users#update', via: :post
+
   resources :sub_categories, except: [:new, :edit]
   resources :categories, except: [:new, :edit]
 

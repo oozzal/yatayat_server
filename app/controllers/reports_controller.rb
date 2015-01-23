@@ -2,13 +2,16 @@ class ReportsController < ApplicationController
   # GET /reports
   # GET /reports.json
   def index
-    @reports = Report.select(:id, :user_id, :location_id, :category_id, :message, :cached_votes_up, :cached_votes_down, :created_at)
-              .order(cached_votes_up: :desc)
-              .to_json(include: {
-                user: { only: :username },
-                location: { only: :name },
-                category: { only: :name }
-              })
+    reports_scope = Report.select(:id, :user_id, :location_id, :category_id, :message, :cached_votes_up, :cached_votes_down, :created_at)
+
+    reports_scope = reports_scope.where('created_at > ?', params[:age].to_i.days.ago) if params[:age].present?
+
+    @reports = reports_scope.order(cached_votes_up: :desc, cached_votes_down: :asc)
+               .to_json(include: {
+                 user: { only: :username },
+                 location: { only: :name },
+                 category: { only: :name }
+               })
 
     render json: @reports
   end
@@ -82,6 +85,15 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
     user = User.where(sim_serial_number: params[:sim_serial_number]).first
     user && user.like(@report)
+
+    render json: @report
+  end
+
+  # POST /reports/dislike
+  def dislike
+    @report = Report.find(params[:id])
+    user = User.where(sim_serial_number: params[:sim_serial_number]).first
+    user && user.dislike(@report)
 
     render json: @report
   end

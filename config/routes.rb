@@ -4,7 +4,10 @@ Rails.application.routes.draw do
   resources :categories, except: [:new, :edit]
 
   resources :reports, except: [:new, :edit] do
-    collection { post 'like' }
+    collection do
+      post 'like'
+      post 'dislike'
+    end
   end
 
   resources :locations, only: [:show]

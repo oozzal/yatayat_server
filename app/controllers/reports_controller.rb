@@ -86,7 +86,7 @@ class ReportsController < ApplicationController
     user = User.where(sim_serial_number: params[:sim_serial_number]).first
     user && user.like(@report)
 
-    render json: @report
+    render json: @report.to_json(include: { user: { only: [:cached_votes_up, :cached_votes_down] } })
   end
 
   # POST /reports/dislike
@@ -95,7 +95,7 @@ class ReportsController < ApplicationController
     user = User.where(sim_serial_number: params[:sim_serial_number]).first
     user && user.dislike(@report)
 
-    render json: @report
+    render json: @report.to_json(include: { user: { only: [:cached_votes_up, :cached_votes_down] } })
   end
 
   private

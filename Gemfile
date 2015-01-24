@@ -15,6 +15,7 @@ gem 'pg'
 group :development, :test do
   gem 'thor'
   gem 'pry'
+  gem 'rails-erd'
 end
 
 # Use SCSS for stylesheets

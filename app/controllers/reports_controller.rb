@@ -8,7 +8,7 @@ class ReportsController < ApplicationController
 
     @reports = reports_scope.order(cached_votes_up: :desc, cached_votes_down: :asc)
                .to_json(include: {
-                 user: { only: :username },
+                 user: { only: [:username, :cached_votes_up, :cached_votes_down] },
                  location: { only: :name },
                  category: { only: :name }
                })
@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
     @report = Report.select(:id, :user_id, :location_id, :category_id, :message, :cached_votes_up, :cached_votes_down, :created_at)
               .find(params[:id])
               .to_json(include: {
-                user: { only: :username },
+                user: { only: [:username, :cached_votes_up, :cached_votes_down] },
                 location: { only: [:name, :latitude, :longitude] },
                 category: { only: :name }
               })

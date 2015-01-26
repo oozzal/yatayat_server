@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :users, except: [:new, :edit]
 
+  # AngularJS sending OPTIONS :(
   match '/users/:id' => 'users#update', via: :post
 
   resources :sub_categories, except: [:new, :edit]
@@ -10,10 +11,13 @@ Rails.application.routes.draw do
     collection do
       post 'like'
       post 'dislike'
+      post 'destroy'
     end
   end
 
   resources :locations, only: [:show]
+
+  root 'users#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113125209) do
+ActiveRecord::Schema.define(version: 20150126020102) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -19,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150113125209) do
     t.datetime "updated_at"
   end
 
-  add_index "categories", ["name"], name: "index_categories_on_name", unique: true
+  add_index "categories", ["name"], name: "index_categories_on_name", unique: true, using: :btree
 
   create_table "locations", force: true do |t|
     t.decimal  "latitude",   precision: 10, scale: 6
@@ -47,14 +50,14 @@ ActiveRecord::Schema.define(version: 20150113125209) do
     t.integer  "category_id"
   end
 
-  add_index "reports", ["cached_votes_down"], name: "index_reports_on_cached_votes_down"
-  add_index "reports", ["cached_votes_score"], name: "index_reports_on_cached_votes_score"
-  add_index "reports", ["cached_votes_total"], name: "index_reports_on_cached_votes_total"
-  add_index "reports", ["cached_votes_up"], name: "index_reports_on_cached_votes_up"
-  add_index "reports", ["cached_weighted_average"], name: "index_reports_on_cached_weighted_average"
-  add_index "reports", ["cached_weighted_score"], name: "index_reports_on_cached_weighted_score"
-  add_index "reports", ["cached_weighted_total"], name: "index_reports_on_cached_weighted_total"
-  add_index "reports", ["user_id"], name: "index_reports_on_user_id"
+  add_index "reports", ["cached_votes_down"], name: "index_reports_on_cached_votes_down", using: :btree
+  add_index "reports", ["cached_votes_score"], name: "index_reports_on_cached_votes_score", using: :btree
+  add_index "reports", ["cached_votes_total"], name: "index_reports_on_cached_votes_total", using: :btree
+  add_index "reports", ["cached_votes_up"], name: "index_reports_on_cached_votes_up", using: :btree
+  add_index "reports", ["cached_weighted_average"], name: "index_reports_on_cached_weighted_average", using: :btree
+  add_index "reports", ["cached_weighted_score"], name: "index_reports_on_cached_weighted_score", using: :btree
+  add_index "reports", ["cached_weighted_total"], name: "index_reports_on_cached_weighted_total", using: :btree
+  add_index "reports", ["user_id"], name: "index_reports_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"
@@ -73,19 +76,20 @@ ActiveRecord::Schema.define(version: 20150113125209) do
     t.integer  "cached_weighted_score",   default: 0
     t.integer  "cached_weighted_total",   default: 0
     t.float    "cached_weighted_average", default: 0.0
+    t.string   "role"
   end
 
-  add_index "users", ["cached_votes_down"], name: "index_users_on_cached_votes_down"
-  add_index "users", ["cached_votes_score"], name: "index_users_on_cached_votes_score"
-  add_index "users", ["cached_votes_total"], name: "index_users_on_cached_votes_total"
-  add_index "users", ["cached_votes_up"], name: "index_users_on_cached_votes_up"
-  add_index "users", ["cached_weighted_average"], name: "index_users_on_cached_weighted_average"
-  add_index "users", ["cached_weighted_score"], name: "index_users_on_cached_weighted_score"
-  add_index "users", ["cached_weighted_total"], name: "index_users_on_cached_weighted_total"
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true
-  add_index "users", ["sim_serial_number"], name: "index_users_on_sim_serial_number", unique: true
-  add_index "users", ["username"], name: "index_users_on_username", unique: true
+  add_index "users", ["cached_votes_down"], name: "index_users_on_cached_votes_down", using: :btree
+  add_index "users", ["cached_votes_score"], name: "index_users_on_cached_votes_score", using: :btree
+  add_index "users", ["cached_votes_total"], name: "index_users_on_cached_votes_total", using: :btree
+  add_index "users", ["cached_votes_up"], name: "index_users_on_cached_votes_up", using: :btree
+  add_index "users", ["cached_weighted_average"], name: "index_users_on_cached_weighted_average", using: :btree
+  add_index "users", ["cached_weighted_score"], name: "index_users_on_cached_weighted_score", using: :btree
+  add_index "users", ["cached_weighted_total"], name: "index_users_on_cached_weighted_total", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true, using: :btree
+  add_index "users", ["sim_serial_number"], name: "index_users_on_sim_serial_number", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "votes", force: true do |t|
     t.integer  "votable_id"
@@ -99,7 +103,7 @@ ActiveRecord::Schema.define(version: 20150113125209) do
     t.datetime "updated_at"
   end
 
-  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope"
-  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope"
+  add_index "votes", ["votable_id", "votable_type", "vote_scope"], name: "index_votes_on_votable_id_and_votable_type_and_vote_scope", using: :btree
+  add_index "votes", ["voter_id", "voter_type", "vote_scope"], name: "index_votes_on_voter_id_and_voter_type_and_vote_scope", using: :btree
 
 end

@@ -77,7 +77,7 @@ class ReportsController < ApplicationController
     @report = Report.find(params[:id])
     @report.destroy
 
-    head :no_content
+    render json: @report
   end
 
   # POST /reports/like

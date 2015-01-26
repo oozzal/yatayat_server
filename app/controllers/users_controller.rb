@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find_by_sim_serial_number(params[:id])
-            .to_json(only: [:id, :sim_serial_number, :username, :phone_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down])
+            .to_json(only: [:id, :sim_serial_number, :username, :role, :phone_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down])
 
     render json: @user
   end

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :users, except: [:new, :edit]
+  resources :users, except: [:new, :edit] do
+    member do
+      get 'details'
+    end
+  end
 
   # AngularJS sending OPTIONS :(
   match '/users/:id' => 'users#update', via: :post

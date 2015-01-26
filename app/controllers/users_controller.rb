@@ -16,6 +16,14 @@ class UsersController < ApplicationController
     render json: @user
   end
 
+  # we might return more information like no of posts, frequency etc
+  def details
+    @user = User.find(params[:id])
+            .to_json(only: [:id, :sim_serial_number, :username, :role, :phone_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down])
+
+    render json: @user
+  end
+
   # POST /users
   # POST /users.json
   def create
@@ -52,7 +60,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :phone_number, :sim_serial_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down)
+    params.require(:user).permit(:username, :phone_number, :sim_serial_number, :email, :first_name, :last_name, :address, :role, :cached_votes_up, :cached_votes_down)
   end
 end
 

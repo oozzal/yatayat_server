@@ -41,8 +41,12 @@ class UsersController < ApplicationController
   def update
     @user = User.find_by_sim_serial_number(params[:id])
 
-    if @user.update(user_params)
+    params = user_params
+    params.delete_if {|k,v| !params[k].present?}
+
+    if @user.update(params)
       render json: @user
+                   .to_json(only: [:id, :sim_serial_number, :username, :role, :phone_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down])
     else
       render json: @user.errors, status: :unprocessable_entity
     end

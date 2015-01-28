@@ -6,7 +6,8 @@ class ReportsController < ApplicationController
 
     reports_scope = reports_scope.where('created_at > ?', params[:age].to_i.days.ago) if params[:age].present?
 
-    @reports = reports_scope.order(cached_votes_up: :desc, cached_votes_down: :asc)
+    @reports = reports_scope.order(created_at: :desc)
+               .order(cached_votes_up: :desc, cached_votes_down: :asc)
                .to_json(include: {
                  user: { only: [:username, :cached_votes_up, :cached_votes_down] },
                  location: { only: :name },

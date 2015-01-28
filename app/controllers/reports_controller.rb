@@ -6,7 +6,9 @@ class ReportsController < ApplicationController
 
     reports_scope = reports_scope.where('created_at > ?', params[:age].to_i.days.ago) if params[:age].present?
 
-    @reports = reports_scope.order(created_at: :desc)
+    # if reports at interval of 5 minutes, show the one with most likes first
+    time_truncate_string = "date_trunc('hour', created_at) + date_part('minute', created_at)::int / 5 * interval '5 min'"
+    @reports = reports_scope.order("#{time_truncate_string} desc")
                .order(cached_votes_up: :desc, cached_votes_down: :asc)
                .to_json(include: {
                  user: { only: [:username, :cached_votes_up, :cached_votes_down] },

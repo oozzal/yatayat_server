@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   acts_as_votable
   acts_as_voter
 
+  paginates_per 5
+
   after_update :notify_role_changed, :if => :role_changed?
 
   def like(report)
@@ -24,7 +26,9 @@ class User < ActiveRecord::Base
   private
 
   def notify_role_changed
-    Emailer.send_mail(email, "Yatayat Role Changed", "Dear #{username}, Your role has been changed from #{role_was} to #{role}.").deliver if username.present? && email.present?
+    if !Rails.env.development? && username.present? && email.present?
+      Emailer.send_mail(email, "Yatayat Role Changed", "Dear #{username}, Your role has been changed from #{role_was} to #{role}.").deliver if username.present? && email.present?
+    end
   end
 
 end

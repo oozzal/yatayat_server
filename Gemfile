@@ -1,13 +1,17 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.1.4'
-gem 'rails-api'
+# gem 'rails-api'
 gem 'acts_as_votable', '~> 0.10.0'
 gem 'protected_attributes'
 
 gem 'geocoder'
 
 gem 'puma'
+gem 'kaminari'
+gem 'twitter-bootstrap-rails'
+gem 'slim-rails'
+gem 'font-awesome-rails'
 
 # Fix the conflict with the system 'rake':
 gem 'rake', '~> 0.9.6'

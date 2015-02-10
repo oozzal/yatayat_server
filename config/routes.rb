@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     member do
       get 'details'
     end
+    collection do
+      get 'admin_index'
+    end
   end
 
   # AngularJS sending OPTIONS :(
@@ -22,7 +25,7 @@ Rails.application.routes.draw do
 
   resources :locations, only: [:show]
 
-  root 'users#index'
+  root 'users#admin_index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

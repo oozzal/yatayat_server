@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   http_basic_authenticate_with name: "yatayat", password: "yatayat@nec", only: [:admin_index]
 
   def admin_index
-    @users = User.order("created_at desc").page params[:page]
+    @users = User.order("created_at asc").page params[:page]
   end
 
   # GET /users

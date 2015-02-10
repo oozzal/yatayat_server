@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       post 'like'
       post 'dislike'
       post 'destroy'
+      post 'update'
     end
   end
 

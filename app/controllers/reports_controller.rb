@@ -27,7 +27,7 @@ class ReportsController < ApplicationController
               .to_json(include: {
                 user: { only: [:username, :cached_votes_up, :cached_votes_down] },
                 location: { only: [:name, :latitude, :longitude] },
-                category: { only: :name }
+                category: { only: [:id, :name] }
               })
 
     render json: @report
@@ -67,7 +67,10 @@ class ReportsController < ApplicationController
   def update
     @report = Report.find(params[:id])
 
-    if @report.update(report_params)
+    params = report_params
+    params.delete_if {|k,v| !params[k].present?}
+
+    if @report.update(params)
       head :no_content
     else
       render json: @report.errors, status: :unprocessable_entity

@@ -36,7 +36,7 @@ class ReportsController < ApplicationController
   # POST /reports
   # POST /reports.json
   def create
-    @report = Report.new(report_params)
+    @report = Report.new(report_params.except(:category, :location))
 
     @report.user_id = report_params[:user_id]
 
@@ -107,7 +107,7 @@ class ReportsController < ApplicationController
   private
 
   def report_params
-    params.require(:report).permit(:message, :user_id, :category_id, location: [:latitude, :longitude, :name])
+    params.require(:report).permit(:message, :user_id, :category_id, location: [:latitude, :longitude, :name], category: [:id, :name])
   end
 end
 

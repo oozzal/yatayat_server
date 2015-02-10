@@ -59,7 +59,7 @@ class UsersController < ApplicationController
         format.html { redirect_to admin_index_users_path, notice: 'User Successfully Updated.' }
       else
         format.js { render json: @user.errors, status: :unprocessable_entity }
-        format.html { redirect_to admin_index_users_path, notice: 'User Update Failed.' }
+        format.html { redirect_to admin_index_users_path, error: 'User Update Failed.' }
       end
     end
   end

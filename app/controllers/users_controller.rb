@@ -42,25 +42,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def update_role
+    user = User.find params[:id]
+    params = user_params
+    if user.update(params)
+      redirect_to admin_index_users_path, notice: 'User Updated Successfully.'
+    else
+      redirect_to admin_index_users_path, notice: 'User Updated Failed.'
+    end
+  end
+
   # POST /users/1
   # POST /users/1.json
   def update
-    @user = User.find_by_sim_serial_number(params[:id]) || User.find(params[:id])
+    @user = User.find_by_sim_serial_number(params[:id])
 
     params = user_params
     params.delete_if {|k,v| !params[k].present?}
 
-    respond_to do |format|
-      if @user.update(params)
-        format.js do
-          render json: @user
-                       .to_json(only: [:id, :sim_serial_number, :username, :role, :phone_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down])
-        end
-        format.html { redirect_to admin_index_users_path, notice: 'User Successfully Updated.' }
-      else
-        format.js { render json: @user.errors, status: :unprocessable_entity }
-        format.html { redirect_to admin_index_users_path, error: 'User Update Failed.' }
-      end
+    if @user.update(params)
+      render json: @user
+                   .to_json(only: [:id, :sim_serial_number, :username, :role, :phone_number, :email, :first_name, :last_name, :address, :cached_votes_up, :cached_votes_down])
+    else
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 

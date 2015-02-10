@@ -16,12 +16,9 @@ h2 Users
           td #{user.email}
           td #{user.role || 'user'}
           td
-            = form_for(user, html: {class: 'form form-inline'}) do |f|
-              .col-sm-2
-                = f.select :role, ['user', 'admin', 'super_admin', 'blocked']
-              .col-sm-1
-              .col-sm-2
-                = f.submit 'Update Role', data: {confirm: 'Are you sure?'}, class: 'btn btn-info'
+            = form_for(user, url: update_role_user_path(user), html: {class: 'form form-inline'}) do |f|
+              = f.select :role, ['user', 'admin', 'super_admin', 'blocked']
+              = f.submit 'Update Role', data: {confirm: 'Are you sure?'}, class: 'btn btn-info'
 
   center
     = paginate @users

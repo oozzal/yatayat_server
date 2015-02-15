@@ -1,7 +1,7 @@
 module Notifier
   extend self
 
-  API_KEY = "AIzaSyAL1LGzmtJF00Z5F0KDdZ2UIohu0RU5YlM"
+  API_KEY = "AIzaSyB09h4QtoxL3alFV4JDzArJYDjoltix4r0"
 
   # msg sample:
   # {

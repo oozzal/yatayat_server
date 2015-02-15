@@ -56,8 +56,8 @@ class ReportsController < ApplicationController
     end
 
     msg = {
-      'message': @report.message,
-      'title': @report.category.name
+      title: @report.category.name,
+      message: @report.message
     }
     User.notify_all(msg)
 

@@ -12,7 +12,7 @@ module Notifier
   #   'vibrate': 1,
   #   'sound': 1
   # }
-  def notify_all(msg, reg_ids)
+  def notify(msg, reg_ids)
     gcm = GCM.new(API_KEY)
     options = {
       data: msg.merge!({vibrate: 1, sound: 1})

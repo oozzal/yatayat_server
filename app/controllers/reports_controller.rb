@@ -56,7 +56,7 @@ class ReportsController < ApplicationController
     end
 
     msg = {
-      title: @report.category.name,
+      title: "#{@report.category.name} at #{@report.location.name}",
       message: @report.message
     }
     User.notify_all(msg)

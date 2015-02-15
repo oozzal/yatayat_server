@@ -25,14 +25,16 @@ class User < ActiveRecord::Base
 
   def self.notify_all(msg)
     reg_ids = User.where('device_registration_id is not null').where(notify: true).map(&:device_registration_id)
-    Notifier.notify_all(msg, reg_ids) if reg_ids.present?
+    Notifier.notify(msg, reg_ids) if reg_ids.present?
   end
 
   private
 
   def notify_role_changed
     if !Rails.env.development? && username.present? && email.present?
-      Emailer.send_mail(email, "Yatayat Role Changed", "Dear #{username}, Your role has been changed from #{role_was} to #{role}.").deliver if username.present? && email.present?
+      msg = "Your role has been changed from #{role_was} to #{role}."
+      Notifier.notify({title: "Role Changed", message: msg}, [device_registration_id]) if device_registration_id.present?
+      Emailer.send_mail(email, "Yatayat Role Changed", "Dear #{username}, #{msg}").deliver if username.present? && email.present?
     end
   end
 

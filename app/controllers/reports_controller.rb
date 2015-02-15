@@ -55,6 +55,13 @@ class ReportsController < ApplicationController
       @report.location = Location.create(report_params[:location])
     end
 
+    msg = {
+      'message': @report.message,
+      'title': @report.category.name
+    }
+    reg_ids = User.where(notify: true).map(&:device_registration_id)
+    Notifier.notify_all(msg, reg_ids) if reg_ids.present?
+
     if @report.save
       render json: @report, status: :created, location: @report
     else

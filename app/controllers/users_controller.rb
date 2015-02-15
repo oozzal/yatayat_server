@@ -80,7 +80,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :phone_number, :sim_serial_number, :email, :first_name, :last_name, :address, :role, :cached_votes_up, :cached_votes_down)
+    params.require(:user).permit(:username, :phone_number, :sim_serial_number, :device_registration_id, :notify, :email, :first_name, :last_name, :address, :role, :cached_votes_up, :cached_votes_down)
   end
 end
 

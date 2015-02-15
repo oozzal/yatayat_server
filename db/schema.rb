@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150126172002) do
+ActiveRecord::Schema.define(version: 20150215133802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(version: 20150126172002) do
     t.integer  "cached_weighted_total",   default: 0
     t.float    "cached_weighted_average", default: 0.0
     t.string   "role"
+    t.text     "device_registration_id"
+    t.boolean  "notify",                  default: false
   end
 
   add_index "users", ["cached_votes_down"], name: "index_users_on_cached_votes_down", using: :btree
@@ -87,6 +89,7 @@ ActiveRecord::Schema.define(version: 20150126172002) do
   add_index "users", ["cached_weighted_score"], name: "index_users_on_cached_weighted_score", using: :btree
   add_index "users", ["cached_weighted_total"], name: "index_users_on_cached_weighted_total", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["notify"], name: "index_users_on_notify", using: :btree
   add_index "users", ["phone_number"], name: "index_users_on_phone_number", unique: true, using: :btree
   add_index "users", ["sim_serial_number"], name: "index_users_on_sim_serial_number", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree

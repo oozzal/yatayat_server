@@ -12,6 +12,8 @@ gem 'kaminari'
 gem 'twitter-bootstrap-rails'
 gem 'slim-rails'
 gem 'font-awesome-rails'
+# Google Cloud Messaging
+gem 'gcm'
 
 # Fix the conflict with the system 'rake':
 gem 'rake', '~> 0.9.6'

@@ -56,8 +56,10 @@ class ReportsController < ApplicationController
     end
 
     msg = {
+      type: "NewReport",
       title: "#{@report.category.name} at #{@report.location.name}",
-      message: @report.message
+      message: @report.message,
+      id: @report.id
     }
     User.notify_all(msg)
 

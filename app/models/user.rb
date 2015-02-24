@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   def notify_role_changed
     if !Rails.env.development? && username.present? && email.present?
       msg = "Role changed from #{role_was} to #{role}."
-      Notifier.notify({title: "Role Changed", message: msg}, [device_registration_id]) if device_registration_id.present?
+      Notifier.notify({type: "RoleChanged", title: "Role Changed", message: msg, id: id}, [device_registration_id]) if device_registration_id.present?
       Emailer.send_mail(email, "Yatayat Role Changed", "Dear #{username}, Your #{msg}").deliver if username.present? && email.present?
     end
   end
